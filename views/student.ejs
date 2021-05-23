@@ -1,0 +1,166 @@
+<%- include('partials/header.ejs') %>
+
+
+
+    <!-- <img class="img-fluid" src="images/im2.JPG"> -->
+    <nav class="navbar navbar-dark navbar-expand-sm  fixed-top">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand mr-auto" href="#"><img src="logos.png" height="30" width="41"></a>
+            <div class="collapse navbar-collapse" id="Navbar">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="/index"><span class="fa fa-home fa-lg"></span>
+                            Home</a></li>
+                    <li class="nav-item "><a class="nav-link" href="/about"><span
+                                class="fa fa-info fa-lg"></span> About</a></li>
+                    
+                    <li class="nav-item"><a href="#" class="nav-link" data-toggle="modal" data-target="#login1">
+                        <i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
+                    Logout</a></li>
+                </ul>
+
+                <ul class="navbar-nav ms-auto">
+                    
+
+                    <li class="nav-item ">
+                        <a href="#" class="nav-link float-right">
+                    
+                                <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i>
+                                <!-- <span class="btn btn-success btn-sm" >
+                                    Join Class
+                                </span> -->
+                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        Join Class
+                                </button>
+
+                        </a>
+                    </li>
+
+                    <li class="nav-item mt-1">
+                        <a class="nav-link float-right" href="#">
+                            <i class="fa fa-user fa-lg" aria-hidden="true"></i> 
+                            Student
+                        </a>
+                    </li>
+                
+                </ul>
+
+
+            </div>
+        </div>
+    </nav>
+
+
+
+    <header class="jumbotron">
+        <div class="container">
+            <div class="row row-header">
+                <div class="col-12 col-sm-2 align-self-left align-self-center">
+                    <img src="logos.png" class="img-fluid">
+                </div>
+                <div class="col-12 col-sm-10">
+                    <h1>G-Class</h1>
+                    <p>info about g-class goes here
+                    </p>
+                </div>
+                
+                <!-- <div class="col-12 col-sm align-self-right align-self-center">
+                    <button type="submit" class="btn btn-warning"><a href="#here">
+                            <bold>Reserve Table</bold>
+                        </a></button>
+                </div> -->
+            </div>
+        </div>
+    </header>
+
+
+
+
+
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">JOIN a CLASS</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                
+                    <div class="container">
+                        <form action="#">
+                      
+                            <label for="class_code">Enter Class Code:</label>
+                            <input type="text" id="class_code" name="class_code" required=""><br>
+                            <input type="submit" value="Submit" class="btn mt-3 btn-primary" style="float: right;">
+                        </form> 
+                            <button style="float: right;margin-right: 5px;" type="button" class="btn mt-3 btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+        <div class="mt-5 mb-5">
+
+
+                <div class="row text-center" style="display:flex;flex-wrap:wrap;margin-top:-15px;">
+
+                        
+                        <div class="col-sm-6 col-md-3"> 
+
+                            <div class="thumbnail border border-dark m-2 pt-1 pr-1 pl-1 pb-2 ml-2 rounded-top">
+
+
+                                <div class="caption">
+                                    
+                                    <div style="background:#F08080" class="m-1">
+                                        <h4>
+                                            Class Name
+                                        </h4>
+                                        
+                                            <h6 style="float:right">-Teacher's Name</h6>
+                                            <br>
+                                            <hr>
+                                    </div>
+                                    
+
+                                    <a href=# class="btn btn-success btn-lg text-light btn-block">Enter into Class</a>
+                                    <br>
+                                    <hr>
+
+                                    <div class="m-1 mt-1 p-1">
+                                        
+                                        <div class="d-flex justify-content-between">
+
+                                            <a href=# ><i class="fa fa-folder" aria-hidden="true"></i> DRIVE</a>
+
+                                            <a href=# ><i class="fa fa-minus-circle" aria-hidden="true"></i> Un-enroll</a>
+                                        
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                </div>
+
+        </div>
+
+
+
+
+
+
+<%- include('partials/footer.ejs') %>
