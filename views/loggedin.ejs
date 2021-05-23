@@ -13,16 +13,75 @@
 		<div class="collapse navbar-collapse" id="Navbar">
 			
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="/logout"><span class="fa fa-home fa-lg"></span>
+				<li class="nav-item "><a class="nav-link" href="/logout"><span class="fa fa-home fa-lg"></span>
 						LOGOUT</a></li>
 				
+			</ul>
+
+			<ul class="navbar-nav ms-auto">       
+				<li class="nav-item ">
+					<a href="#" class="nav-link float-right" data-toggle="modal" data-target="#addAssignment"><span class="fa fa-plus-circle fa-lg"></span>Add</a>
+				</li>
+
+				<!-- <li class="nav-item mt-1">
+					<a class="nav-link float-right" href="#">
+						<i class="fa fa-user fa-lg" aria-hidden="true"></i> 
+						Student
+					</a>
+				</li> -->
+			
 			</ul>
 
 		</div>
 
 	</div>
 </nav>
-
+<div class="modal fade" id="addAssignment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+			<img src="logos.png" height="30" width="41">
+		  <h5 class="modal-title" id="exampleModalLabel">Add Assignment</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body row ">
+			
+			<form >
+				<div class="form-group row">
+					<label for="loginn" class="col-sm-2 col-form-label">Title:</label>
+					<div class="col">
+						<input type="text" class="form-control" id="user_name" name="username" placeholder="name" required>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="loginn" class="col-sm-2 col-form-label">Description:</label>
+					<div class="col">
+						<textarea  id="description" name="description" rows="5" cols="50"></textarea>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-md-8">
+						<form>
+							<div class="form-group">
+							<label for="file1">Upload PDF <span class="fa fa-folder-open fa-lg"></span></label>
+							<input type="file" class="form-control-file" id="file1">
+							</div>
+						</form>
+					</div>
+					<div class=" col-md-4">
+						<button type="submit" class="btn btn-primary"><i class="fa fa-tags fa-lg"></i> Assign</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		</div>
+	  </div>
+	</div>
+  </div>
 
 <header class="jumbotron">
 	<div class="container">
@@ -48,6 +107,46 @@
 </header>
 
 <h1>successfully logged in</h1>
+<div class="container">
+	<div class="row">
+		<div class="col col-sm">
+			<div class="card align-self-center" >
+				<img class="card-img-top" src="4.png" alt="Card image cap" style="height: 200px;" >
+				<div class="card-body">
+					<h5 class="card-title">Assignment title</h5>
+					<p class="card-text">Assignment content goes here</p>
+					<div class="row">
+						<div class="col col-sm-10">
+							<form>
+								<div class="form-group">
+								<label for="file1">Upload Assignment <span class="fa fa-folder-open fa-lg"></span></label>
+								<input type="file" class="form-control-file" id="file1">
+								</div>
+							</form>
+						</div>
+						<div class="col col-sm-2 align-self-right">
+							<a href="#" class="btn btn-primary ">submit</a>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer text-muted">
+					<form>
+						<div class="row">
+							
+								<div class="col col-sm-11">
+									<input type="text"  class="form-control" id="comment" placeholder="comment">
+								</div>
+								<div class="col col-sm-1">
+									<a href="#"><span class="fa fa-paper-plane fa-lg"></span></a>
+								</div>
+							
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <br>
 
