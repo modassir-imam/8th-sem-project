@@ -97,8 +97,20 @@ app.get("/student",function(req,res){
 });
 
 app.get("/loggedin", isLoggedIn, async function(req,res){
-	const assignments = await Assignment.find().populate('comments.created_by').lean()
+	let assignments = await Assignment.find().populate('comments.created_by').lean()
+	// Checking if current user submitted every assignments
+	assignments = assignments.map(assignment => {
+		// Checking now
+		if(assignment.submissions){
+			const submission = assignment.submissions.find(submission => submission.submitted_by.equals(req.user._id))
+			if(submission){
 
+				assignment['is_submitted'] = true	
+			}
+		}
+
+		return assignment
+	})
 	res.render("loggedin.ejs", {assignments, user_type : req.user.type, submitted : req.query.submitted});
 });
 

@@ -125,10 +125,6 @@
 
 <div class="container">
 
-<% if(submitted){ %>
-<h4 class="text-success text-center">Assignment submitted successfully</h4>
-<% } %>
-
 <% for(let assignment of assignments){ %>
 	<div class="row">
 		<div class="col col-sm">
@@ -140,12 +136,17 @@
 						<h5 class="card-title"><%= assignment.name %></h5>
 						<p class="card-text"><%= assignment.description %></p>
 						<p class="card-text">Due Date: <%= `${(assignment.due_date.getDate())}/${(assignment.due_date.getMonth()+1)}/${assignment.due_date.getFullYear()}` %></p>
+						
 						<div class="row">
 							<% if(assignment.file){ %>
 							<div class="col-sm-12 my-2">
 								<a target="_blank" href="uploads/<%= assignment.file %>" class="btn btn-primary text-white">View Assignment</a>
 							</div>
 							<% }if(user_type == 's'){ %>
+
+							<% if(assignment.is_submitted){ %>
+								<h4 class="text-success px-3 text-center">Assignment submitted successfully</h4>
+							<% }else{ %>
 							<div class="col col-sm-10">
 								<form>
 									<div class="form-group">
@@ -158,6 +159,8 @@
 							<div class="col col-sm-2 align-self-right">
 								<input type="submit" class="btn btn-primary ">
 							</div>
+							<% } %>
+
 							<% }else{ %>
 							<div class="col col-sm-4">
 								<a href="assignmentsubmissions?assignment=<%= assignment._id %>" class="btn btn-primary text-white">View Submissions</a>
