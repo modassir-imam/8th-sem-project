@@ -98,7 +98,7 @@ app.get("/student",function(req,res){
 
 app.get("/loggedin", isLoggedIn, async function(req,res){
 	const assignments = await Assignment.find().populate('comments.created_by').lean()
-	console.log(assignments)
+
 	res.render("loggedin.ejs", {assignments, user_type : req.user.type, submitted : req.query.submitted});
 });
 
@@ -107,7 +107,6 @@ app.get("/assignmentsubmissions", isLoggedIn, async function(req,res){
 
 	const assignment = await Assignment.findById(assignment_id).populate('submissions.submitted_by').lean()
 	
-	console.log(assignment)	
 	res.render("viewassignment.ejs", {user_type : req.user.type, assignment});
 });
 

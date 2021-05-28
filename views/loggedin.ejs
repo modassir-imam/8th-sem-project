@@ -141,7 +141,11 @@
 						<p class="card-text"><%= assignment.description %></p>
 						<p class="card-text">Due Date: <%= `${(assignment.due_date.getDate())}/${(assignment.due_date.getMonth()+1)}/${assignment.due_date.getFullYear()}` %></p>
 						<div class="row">
-							<% if(user_type == 's'){ %>
+							<% if(assignment.file){ %>
+							<div class="col-sm-12 my-2">
+								<a target="_blank" href="uploads/<%= assignment.file %>" class="btn btn-primary text-white">View Assignment</a>
+							</div>
+							<% }if(user_type == 's'){ %>
 							<div class="col col-sm-10">
 								<form>
 									<div class="form-group">
