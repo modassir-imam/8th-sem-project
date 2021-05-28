@@ -7,6 +7,17 @@ var bodyParser=require('body-parser');
 var methodOverride=require("method-override");
 var expSanitizer=require('express-sanitizer');
 const path = require('path');
+const multer = require('multer')
+
+//Upload files
+const upload_directory = `uploads/`
+const storage = multer.diskStorage({
+	destination : `${upload_directory}`,
+	filename : function(req, file, cb){
+		cb(null, `${Date.now()}-${file.originalname}`)
+	}
+})
+const upload = multer({ storage : storage })
 
 mongo.set('useNewUrlParser', true);
 mongo.set('useUnifiedTopology', true);
@@ -15,9 +26,13 @@ mongo.set('useFindAndModify', false);
 
 app.set("view engine","ejs");
 app.use(exp.static("public"));
+app.use("/uploads", exp.static("uploads"));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 app.use(expSanitizer());
+
+//Importing models
+const {Assignment} = require('./models/Assignment')
 
 
 
@@ -81,9 +96,19 @@ app.get("/student",function(req,res){
 	res.render("student.ejs");
 });
 
+app.get("/loggedin", isLoggedIn, async function(req,res){
+	const assignments = await Assignment.find().populate('comments.created_by').lean()
+	console.log(assignments)
+	res.render("loggedin.ejs", {assignments, user_type : req.user.type, submitted : req.query.submitted});
+});
 
-app.get("/loggedin",function(req,res){
-	res.render("loggedin.ejs");
+app.get("/assignmentsubmissions", isLoggedIn, async function(req,res){
+	const assignment_id = req.query.assignment
+
+	const assignment = await Assignment.findById(assignment_id).populate('submissions.submitted_by').lean()
+	
+	console.log(assignment)	
+	res.render("viewassignment.ejs", {user_type : req.user.type, assignment});
 });
 
 app.get("/registered",function(req,res){
@@ -100,6 +125,60 @@ app.post("/login",passport.authenticate("local",{
 	failureRedirect:"/loginfail"
 }),function(req,res){
 });
+
+app.post("/addassignment", upload.single('assignment_file'), async (req, res) => {
+	const filename = req.file ? req.file.filename : null
+	const assignment = Assignment({
+		name : req.body.name,
+		description : req.body.description,
+		due_date : req.body.date,
+		file : filename
+	})
+
+	await assignment.save()
+
+	return res.redirect("/loggedin");
+})
+
+app.post("/assignmentcomment", isLoggedIn, async (req, res) => {
+	const comment = req.body.comment
+	const assignment_id = req.body.assignment
+
+	const assignment = await Assignment.findById(assignment_id)
+
+	if(assignment){
+		if(!assignment.comments){
+			assignment.comments = []
+		}
+		assignment.comments.push({
+			created_by : req.user._id,
+			name : comment,
+		})
+	}
+
+	await assignment.save()
+	return res.redirect('/loggedin')
+})
+
+app.post("/submitassignment", [isLoggedIn, upload.single('stud_assignment_file')], async (req, res) => {
+	const filename = req.file ? req.file.filename : null
+	const assignment_id = req.body.assignment
+
+	const assignment = await Assignment.findById(assignment_id)
+
+	if(assignment){
+		if(!assignment.submissions){
+			assignment.submissions = []
+		}
+		assignment.submissions.push({
+			submitted_by : req.user._id,
+			file : filename,
+		})
+	}
+
+	await assignment.save()
+	return res.redirect('/loggedin?submitted=true')
+})
 
 
 function isLoggedIn(req,res,next)

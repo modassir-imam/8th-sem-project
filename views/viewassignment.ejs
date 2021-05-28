@@ -121,71 +121,18 @@
 	</div>
 </header>
 
-<h2 class="text-center">Successfully logged in</h2>
-
 <div class="container">
 
-<% if(submitted){ %>
-<h4 class="text-success text-center">Assignment submitted successfully</h4>
-<% } %>
+<h4 class=" text-center">Assignment : <%= assignment.name %></h4>
 
-<% for(let assignment of assignments){ %>
+<% for(let submission of assignment.submissions){ %>
 	<div class="row">
 		<div class="col col-sm">
 			<div class="card align-self-center" >
-				<img class="card-img-top" src="4.png" alt="Card image cap" style="height: 200px;" >
-				<div class="card-body">
-					<form method="post" action="/submitassignment" enctype="multipart/form-data">
-						<input type="hidden" value="<%= assignment._id %>" name="assignment">
-						<h5 class="card-title"><%= assignment.name %></h5>
-						<p class="card-text"><%= assignment.description %></p>
-						<p class="card-text">Due Date: <%= `${(assignment.due_date.getDate())}/${(assignment.due_date.getMonth()+1)}/${assignment.due_date.getFullYear()}` %></p>
-						<div class="row">
-							<% if(user_type == 's'){ %>
-							<div class="col col-sm-10">
-								<form>
-									<div class="form-group">
-									<label for="file1">Upload Assignment <span class="fa fa-folder-open fa-lg"></span></label>
-									<input type="file" name="stud_assignment_file" class="form-control-file" id="file1">
-									</div>
-								</form>
-							</div>
-
-							<div class="col col-sm-2 align-self-right">
-								<input type="submit" class="btn btn-primary ">
-							</div>
-							<% }else{ %>
-							<div class="col col-sm-4">
-								<a href="assignmentsubmissions?assignment=<%= assignment._id %>" class="btn btn-primary text-white">View Submissions</a>
-							</div>
-							<% } %>
-						</div>
-					</form>
-				</div>
-				<div class="card-footer text-muted">
-					<div class="row">
-						<% if(assignment.comments){ for(let comment of assignment.comments){ %>
-						<div class="col col-sm-3">
-							<p>By- <%= comment.created_by.username %></p>
-						</div>
-						<div class="col col-sm-9">
-							<input type="text" value="<%= comment.name %>" class="form-control" id="comment" name="comment" placeholder="comment" readonly>
-						</div>
-						<% }} %>	
-					</div>
-					<form id="commentform" action="/assignmentcomment" method="post">
-						<div class="row">
-								<input type="hidden" value="<%= assignment._id %>" name="assignment">
-								<div class="col col-sm-11">
-									<input type="text"  class="form-control" id="comment" name="comment" placeholder="comment">
-								</div>
-								<div class="col col-sm-1">
-									<button type="submit"><span class="fa fa-paper-plane fa-lg"></span></button>
-								</div>
-							
-						</div>
-					</form>
-					
+				<div class="card-body">	
+					<input type="hidden" value="<%= assignment._id %>" name="assignment">
+					<h5 class="card-title">Submission By <%= submission.submitted_by.username %> at <%= submission.submitted_at %></h5>
+					<a class="btn btn-primary" target="_blank" href="uploads/<%= submission.file %>">View</a>
 				</div>
 			</div>
 		</div>
@@ -198,10 +145,5 @@
 
 
 <br>
-
-
-<!-- <a href="/logout">
-	LOGOUT
-</a> -->
 
 <%- include('partials/footer.ejs') %>
