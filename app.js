@@ -111,7 +111,7 @@ app.get("/loggedin", isLoggedIn, async function(req,res){
 
 		return assignment
 	})
-	res.render("loggedin.ejs", {assignments, user_type : req.user.type, submitted : req.query.submitted});
+	res.render("loggedin.ejs", {assignments,user:req.user, user_type : req.user.type, submitted : req.query.submitted});
 });
 
 app.get("/assignmentsubmissions", isLoggedIn, async function(req,res){
