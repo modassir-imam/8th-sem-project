@@ -30,7 +30,8 @@ const assignmentSchema = new mongoose.Schema({
 			type : mongoose.Schema.Types.ObjectId,
 			ref : 'user'
 		},
-	}]
+	}],
+	owner : String
 })
 
 const Assignment = mongoose.model('Assignment', assignmentSchema)

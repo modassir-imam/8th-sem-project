@@ -15,6 +15,15 @@
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item "><a class="nav-link" href="/logout"><span class="fa fa-home fa-lg"></span>
 						LOGOUT</a></li>
+				<% if(current_user){ %>
+				
+					<li class="nav-item">
+						<a class="nav-link ml-5" href="#">
+							Signed In As : <%=current_user.username%>
+						</a>
+					</li>
+				
+					<% } %>
 				
 			</ul>
 
@@ -125,7 +134,55 @@
 
 <h4 class=" text-center">Assignment : <%= assignment.name %></h4>
 
-<% for(let submission of assignment.submissions){ %>
+<div style="border:1px solid black;padding:10px;">
+
+	<% for(var i=0;i<user_in_ejs_file.length;i++){ %>
+
+		<% if(user_in_ejs_file[i].type!="t" ){ %>
+
+			<p>
+				<b>
+					<%= user_in_ejs_file[i].username.toUpperCase() %>
+				</b>
+
+				-
+
+
+				<% if(assignment.submissions.length===0){ %>
+				
+					<span style="color:red;">Not submitted</span>
+				
+					<% }else{ %>
+				
+				
+						<% for(const submission of assignment.submissions){ %>
+				
+							<% if (submission.submitted_by.username==user_in_ejs_file[i].username){ %>
+				
+								<i><u>Submitted</u></i> at <%= submission.submitted_at %>
+				
+									<a class="btn btn-primary" target="_blank" href="uploads/<%= submission.file %>">View</a>
+				
+									<% } else{ %>
+				
+										<span style="color:red;">Not submitted</span>
+				
+						<% } %>
+				
+				<% } %>
+				
+		<% } %>
+			</p>
+			<% } %>
+				<% } %>
+
+</div>
+
+<br>
+<hr>
+<br>
+
+<!-- <% for(let submission of assignment.submissions){ %>
 	<div class="row">
 		<div class="col col-sm">
 			<div class="card align-self-center" >
@@ -137,7 +194,7 @@
 			</div>
 		</div>
 	</div>
-<% } %>
+<% } %> -->
 </form>
 </div>
 

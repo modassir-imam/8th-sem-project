@@ -70,7 +70,10 @@ mongo.connect("mongodb://localhost/final_year");
 
 
 
-
+app.use(function(req,res,next){
+	res.locals.current_user=req.user;
+	next();
+});
 
 
 //================================================================
@@ -114,12 +117,33 @@ app.get("/loggedin", isLoggedIn, async function(req,res){
 	res.render("loggedin.ejs", {assignments,user:req.user, user_type : req.user.type, submitted : req.query.submitted});
 });
 
-app.get("/assignmentsubmissions", isLoggedIn, async function(req,res){
-	const assignment_id = req.query.assignment
+// app.get("/assignmentsubmissions", isLoggedIn, async function(req,res){
+// 	const assignment_id = req.query.assignment
 
-	const assignment = await Assignment.findById(assignment_id).populate('submissions.submitted_by').lean()
+// 	const assignment = await Assignment.findById(assignment_id).populate('submissions.submitted_by').lean()
 	
-	res.render("viewassignment.ejs", {user_type : req.user.type, assignment});
+// 	res.render("viewassignment.ejs", {user_type : req.user.type, assignment});
+// });
+
+app.get("/assignmentsubmissions", isLoggedIn, async function(req,res){
+	const assignment_id = req.query.assignment;
+
+	const assignment = await Assignment.findById(assignment_id).populate('submissions.submitted_by').lean();
+	
+
+	User.find({},function(err,data){
+		if(err)
+		{
+			console.log("something went wrong");
+			console.log(err);
+		}
+		else
+		{
+			res.render("viewassignment.ejs",{user_in_ejs_file:data, assignment ,user_type : req.user.type});
+		}
+
+	});
+
 });
 
 app.get("/registered",function(req,res){
@@ -143,7 +167,8 @@ app.post("/addassignment", upload.single('assignment_file'), async (req, res) =>
 		name : req.body.name,
 		description : req.body.description,
 		due_date : req.body.date,
-		file : filename
+		file : filename,
+		owner : req.user.username
 	})
 
 	await assignment.save()
