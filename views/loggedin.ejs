@@ -3,52 +3,32 @@
 
 	<nav class="navbar navbar-dark navbar-expand-sm  fixed-top">
 		<div class="container">
-
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#Navbar"
 				aria-controls="Navbar" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-
 			<a class="navbar-brand mr-auto" href="#"><img src="logos.png" height="30" width="41"></a>
-
 			<div class="collapse navbar-collapse" id="Navbar">
-
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item "><a class="nav-link" href="/logout"><span class="fa fa-home fa-lg"></span>
 							LOGOUT</a></li>
-
 					<% if(current_user){ %>
-
-						<li class="nav-item">
-							<a class="nav-link ml-5" href="#">
-								Signed In As : <%=current_user.username%>
-							</a>
-						</li>
-
-						<% } %>
-
-
+					<li class="nav-item">
+						<a class="nav-link ml-5" href="#">
+							Signed In As : <%=current_user.username%>
+						</a>
+					</li>
+					<% } %>
 				</ul>
-
 				<ul class="navbar-nav ms-auto">
 					<% if(user_type=='t' ){ %>
 						<li class="nav-item ">
 							<a href="#" class="nav-link float-right" data-toggle="modal"
-								data-target="#addAssignment"><span class="fa fa-plus-circle fa-lg"></span>Add</a>
+							data-target="#addAssignment"><span class="fa fa-plus-circle fa-lg"></span>Add</a>
 						</li>
-						<% } %>
-
-							<!-- <li class="nav-item mt-1">
-					<a class="nav-link float-right" href="#">
-						<i class="fa fa-user fa-lg" aria-hidden="true"></i> 
-						Student
-					</a>
-				</li> -->
-
+					<% } %>
 				</ul>
-
 			</div>
-
 		</div>
 	</nav>
 
@@ -65,71 +45,44 @@
 				</div>
 
 				<div class="modal-body row ">
-
 					<form class="px-3" method="post" action="/addassignment" enctype="multipart/form-data">
-
 						<div class="form-group row">
-
 							<label for="loginn" class="col-sm-3 col-form-label">Title:</label>
-
 							<div class="col">
 								<input type="text" class="form-control" id="name" name="name"
 									placeholder="Assignment Title" required>
 							</div>
-
 						</div>
-
 						<div class="form-group row">
-
 							<label for="loginn" class="col-sm-3 col-form-label">Description:</label>
-
 							<div class="col">
 								<textarea placeholder="Describe your Assignment" class="form-control" id="description"
 									name="description" rows="5" cols="50"></textarea>
 							</div>
-
 						</div>
-
 						<div class="row form-group">
-
 							<label for="date" class="col-sm-3 col-form-label">Deadline:</label>
-
 							<div class="col">
 								<input class="form-control" type="date" id="date" name=date>
 							</div>
-
 						</div>
-
 						<div class="row form-group">
-
 							<div class="col-md-8">
-
 								<div class="form-group">
-
 									<label for="file1">Upload PDF <span class="fa fa-folder-open fa-lg"></span></label>
 									<input type="file" class="form-control-file" id="file1" name="assignment_file">
-
 								</div>
-
 							</div>
-
 							<div class=" col-md-4">
-
 							</div>
-
 						</div>
-
 						<div class="row">
-
 							<div class="col text-center">
 								<button type="submit" class="btn btn-primary"><i class="fa fa-tags fa-lg"></i>
 									Assign</button>
 							</div>
-
 						</div>
-
 					</form>
-
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -153,12 +106,6 @@
 						Parents easily join your class using any device
 					</p>
 				</div>
-
-				<!-- <div class="col-12 col-sm align-self-right align-self-center">
-				<button type="submit" class="btn btn-warning"><a href="#here">
-						<bold>Reserve Table</bold>
-					</a></button>
-			</div> -->
 			</div>
 		</div>
 	</header>
@@ -166,8 +113,6 @@
 	<!-- <h2 class="text-center">Successfully logged in</h2> -->
 
 	<div class="container">
-
-
 		<div class="row row-content">
 			<div class="col-12">
 				<ul class="nav nav-tabs">
@@ -188,24 +133,18 @@
 						<% for(let assignment of assignments){ %>
 							<% if(assignment.owner==current_user.username){ %>
 								<div class="row">
-						
-									<div class="col col-sm">
-						
-										<div class="card align-self-center">
-						
-											<img class="card-img-top" src="4.png" alt="Card image cap" style="height: 200px;">
-						
+									<div class="col col-sm">						
+										<div class="card align-self-center">						
+											<img class="card-img-top" src="4.png" alt="Card image cap" style="height: 200px;">						
 											<div class="card-body">
-						
 												<form method="post" action="/submitassignment" enctype="multipart/form-data">
-						
 													<input type="hidden" value="<%= assignment._id %>" name="assignment">
-						
 													<% if(user_type=='s' ){ %>
 														<p class="card-text" style="float:right;background:lightgreen;">Teacher: <b>
 																<%= assignment.owner %>
-															</b></p>
-														<% } %>
+															</b>
+														</p>
+													<% } %>
 						
 															<h5 class="card-title">
 																<%= assignment.name %>
@@ -216,7 +155,6 @@
 															<p class="card-text">Due Date: <%=
 																	`${(assignment.due_date.getDate())}/${(assignment.due_date.getMonth()+1)}/${assignment.due_date.getFullYear()}`
 																	%>
-						
 															</p>
 						
 															<div class="row">
@@ -230,14 +168,10 @@
 																	<% }if(user_type=='s' ){ %>
 						
 																		<% if(assignment.is_submitted){ %>
-						
 																			<h4 class="text-success px-3 text-center">Assignment submitted
 																				successfully</h4>
-						
 																			<% }else{ %>
-						
 																				<div class="col col-sm-10">
-						
 																					<form>
 																						<div class="form-group">
 																							<label for="file1">Upload Assignment <span
@@ -246,27 +180,20 @@
 																								class="form-control-file" id="file1" required>
 																						</div>
 																					</form>
-						
 																				</div>
 						
 																				<div class="col col-sm-2 align-self-right">
 																					<input type="submit" class="btn btn-primary ">
 																				</div>
-																				<% } %>
-						
-						
+																			<% } %>
 																					<% }else{ %>
-						
 																						<div class="col col-sm-4">
-						
 																							<a href="assignmentsubmissions?assignment=<%= assignment._id %>"
 																								class="btn btn-primary text-white">View
 																								Submissions
 																							</a>
-						
 																						</div>
-						
-																						<% } %>
+																			<% } %>
 						
 															</div>
 						
