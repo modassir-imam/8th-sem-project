@@ -114,7 +114,21 @@ app.get("/loggedin", isLoggedIn, async function(req,res){
 
 		return assignment
 	})
-	res.render("loggedin.ejs", {assignments,user:req.user, user_type : req.user.type, submitted : req.query.submitted});
+	var count=0;
+	var cnt=0;
+	var x;
+	User.find({},function(err,data){
+		if(err)
+		{
+			console.log("something went wrong");
+			console.log(err);
+		}
+		else
+		{
+			res.render("loggedin.ejs", {x :x,cnt :cnt,count : count,user_in_ejs_file:data,assignments,user:req.user, user_type : req.user.type, submitted : req.query.submitted});
+		}
+
+	});
 });
 
 // app.get("/assignmentsubmissions", isLoggedIn, async function(req,res){
@@ -160,6 +174,20 @@ app.post("/login",passport.authenticate("local",{
 	failureRedirect:"/loginfail"
 }),function(req,res){
 });
+
+// app.get("/teacher/assignment/:username",function(req,res){
+// 	Assignment.find({owner:req.params.username},function(err,data){
+// 		if(err)
+// 		{
+// 			console.log(err);
+// 			res.redirect("/loggedin");
+// 		}
+// 		else
+// 		{
+// 			res.render("newpage.ejs",{user_type : req.user.type,assignments:data});
+// 		}
+// 	});
+// });
 
 app.post("/addassignment", upload.single('assignment_file'), async (req, res) => {
 	const filename = req.file ? req.file.filename : null
